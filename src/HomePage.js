@@ -42,8 +42,8 @@ function HomePage() {
             <button className={styles.button} onClick={limparFormulario}>Limpar</button>
             <div className={styles.resultado}>
                 <p>Baseado num déficit calórico diário de 500 kcal</p>
-                <p>Calorias a serem consumidas para perder peso: {Math.ceil(resultado.caloriasDiarias)} kcal</p>
-                <p>Quilometragem necessária para perder peso: {Math.ceil(resultado.quilometragemNecessaria)} km/dia</p>
+                <p>Calorias diárias para perder peso: {Math.ceil(resultado.caloriasDiarias)} kcal</p>
+                <p>Kms necessários para perder peso: {Math.ceil(resultado.quilometragemNecessaria)} km/dia</p>
             </div>
         </div>
     );
