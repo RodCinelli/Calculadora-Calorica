@@ -1,47 +1,127 @@
 .container {
     background-color: #ffe4e1;
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px; /* Reduzir o padding pode trazer o conteúdo mais para o centro */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .header {
     color: #ff69b4;
-    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px; /* Reduzir a margem inferior pode aproximar o cabeçalho dos campos de entrada */
+    text-align: center;
 }
 
-.form-group {
+.log-list {
+    width: 100%;
+    max-width: 400px;
     margin: 10px 0;
+}
+
+.log-item {
+    padding: 10px;
+    border: 2px solid #ff69b4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: white;
 }
 
 .input {
     padding: 10px;
     border: 2px solid #ff69b4;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-bottom: 30px; /* Aumentar a margem inferior pode afastar o .input do .button */
+    width: 97%; 
+    text-align: center;
 }
+
+.lastInput {
+    margin-bottom: 40px; /* Margem maior para o último input */
+}
+
+.activityMessage {
+    background-color: #f0f0f0;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-top: 30px;
+    display: flex; /* Habilita o layout flex */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    flex-grow: 1; /* Permite que o elemento se expanda horizontalmente */
+}
+
+.activityMessage p {
+    font-weight: bold;
+    font-size: 14px;
+    color: #ff82ab;
+    line-height: 1.5;
+}
+
+ul {
+    list-style-type: none; /* Remove marcadores de lista */
+    padding: 0; /* Remove padding padrão */
+    display: flex; /* Habilita flexbox */
+    flex-direction: column; /* Organiza itens da lista em coluna */
+    align-items: center; /* Centraliza itens da lista horizontalmente */
+    width: 100%; /* Ajusta a largura da lista */
+}
+
+li {
+    width: 100%; /* Ajusta a largura dos itens da lista */
+    display: flex; /* Habilita flexbox */
+    flex-direction: column; /* Organiza conteúdos do item em coluna */
+    align-items: center; /* Centraliza conteúdos do item horizontalmente */
+    margin-bottom: 10px; /* Espaçamento entre itens da lista */
+}
+
+
 
 .button {
     padding: 10px 20px;
-    background-color: #ff69b4;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #ff69b4;
 }
 
 .button:hover {
     background-color: #ff82ab;
 }
 
-.activity-list {
-    margin-top: 20px;
-    color: #ff69b4;
+.button:last-child {
+    margin-bottom: 0;
 }
 
-.activity-item {
+.buttonAdd {
+    padding: 10px 20px;
+    width: 110%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     margin-bottom: 10px;
+    background-color: #ff69b4;
 }
+
+.buttonAdd:hover {
+    background-color: #ff82ab;
+}
+
+.buttonDelete {
+    display: block;
+    margin: 10px auto;
+}
+
+.errorMessage {
+    color: red;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+

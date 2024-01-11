@@ -1,45 +1,66 @@
 .container {
     background-color: #ffe4e1;
-    /* Rosa claro */
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px; /* Reduzir o padding pode trazer o conteúdo mais para o centro */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .header {
     color: #ff69b4;
-    /* Tom mais forte de rosa */
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin: 10px 0;
+    margin-top: 50px;
+    margin-bottom: 50px; /* Reduzir a margem inferior pode aproximar o cabeçalho dos campos de entrada */
+    text-align: center;
 }
 
 .input {
     padding: 10px;
     border: 2px solid #ff69b4;
     border-radius: 5px;
-    margin-right: 10px;
+    margin-bottom: 30px; /* Aumentar a margem inferior pode afastar o .input do .button */
+    width: 50%; 
+    text-align: center;
+}
+
+.lastInput {
+    margin-bottom: 40px; /* Margem maior para o último input */
 }
 
 .button {
     padding: 10px 20px;
-    background-color: #ff69b4;
+    width: 56%;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 10px;
+    background-color: #ff69b4;
 }
 
 .button:hover {
     background-color: #ff82ab;
 }
 
-.result {
-    margin-top: 20px;
-    color: #ff69b4;
+.button:last-child {
+    margin-bottom: 0;
+}
+
+.resultado {
+    background-color: #f0f0f0;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-top: 50px;
+}
+
+.resultado p {
+    font-weight: bold;
+    font-size: 14px;
+    color: #ff82ab;
+    line-height: 1.5;
+}
+
+.resultado p:last-child {
+    margin-bottom: 0;
 }

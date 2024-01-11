@@ -9,6 +9,7 @@ function ActivityLogPage() {
         calorias: '',
         quilometragem: ''
     });
+    const [errorMessage, setErrorMessage] = useState(''); // Novo estado para a mensagem de erro
 
     useEffect(() => {
         const storedActivities = localStorage.getItem('activities');
@@ -18,10 +19,17 @@ function ActivityLogPage() {
     }, []);
 
     const handleAddActivity = () => {
+        // Verifica se todos os campos foram preenchidos
+        if (!newActivity.tipo || !newActivity.data || !newActivity.calorias || !newActivity.quilometragem) {
+            setErrorMessage('Por favor, preencha todos os campos antes de adicionar uma atividade.');
+            return;
+        }
+
         const updatedActivities = [...activities, newActivity];
         setActivities(updatedActivities);
         localStorage.setItem('activities', JSON.stringify(updatedActivities));
         setNewActivity({ tipo: '', data: '', calorias: '', quilometragem: '' }); // Reset form
+        setErrorMessage(''); // Limpa a mensagem de erro
     };
 
     const handleDeleteActivity = (index) => {
@@ -32,38 +40,48 @@ function ActivityLogPage() {
 
     return (
         <div className={styles.container}>
-        <h2 className={styles.header}>Registro de Atividades</h2>
-            <input
-                type="text"
-                value={newActivity.tipo}
-                onChange={e => setNewActivity({ ...newActivity, tipo: e.target.value })}
-                placeholder="Tipo de Atividade"
-            />
-            <input
-                type="date"
-                value={newActivity.data}
-                onChange={e => setNewActivity({ ...newActivity, data: e.target.value })}
-                placeholder="Data"
-            />
-            <input
-                type="number"
-                value={newActivity.calorias}
-                onChange={e => setNewActivity({ ...newActivity, calorias: e.target.value })}
-                placeholder="Calorias Gastas"
-            />
-            <input
-                type="number"
-                value={newActivity.quilometragem}
-                onChange={e => setNewActivity({ ...newActivity, quilometragem: e.target.value })}
-                placeholder="Quilometragem Percorrida"
-            />
-            <button onClick={handleAddActivity}>Adicionar Atividade</button>
+            <h2 className={styles.header}>Registro de Atividades</h2>
+            {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>} {/* Exibe a mensagem de erro */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <input
+                    className={styles.input}
+                    type="text"
+                    value={newActivity.tipo}
+                    onChange={e => setNewActivity({ ...newActivity, tipo: e.target.value })}
+                    placeholder="Tipo de Atividade"
+                />
+                <input
+                    className={styles.input}
+                    type="date"
+                    value={newActivity.data}
+                    onChange={e => setNewActivity({ ...newActivity, data: e.target.value })}
+                    placeholder="Data"
+                />
+                <input
+                    className={styles.input}
+                    type="number"
+                    value={newActivity.calorias}
+                    onChange={e => setNewActivity({ ...newActivity, calorias: e.target.value })}
+                    placeholder="Calorias Gastas"
+                />
+                <input className={`${styles.input} ${styles.lastInput}`}
+                    type="number"
+                    value={newActivity.quilometragem}
+                    onChange={e => setNewActivity({ ...newActivity, quilometragem: e.target.value })}
+                    placeholder="Quilometragem Percorrida"
+                />
+                <button className={`${styles.buttonAdd} ${styles.button}`} onClick={handleAddActivity}>Adicionar Atividade</button>
+            </div>
 
             <ul>
                 {activities.map((activity, index) => (
-                    <li key={index}>
-                        {activity.tipo} - {activity.data} - {activity.calorias} calorias - {activity.quilometragem} km
-                        <button onClick={() => handleDeleteActivity(index)}>Excluir</button>
+                    <li key={index} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <div className={styles.activityMessage}>
+                            <p>{activity.tipo} - {activity.data} - {activity.calorias} calorias - {activity.quilometragem} km</p>
+                        </div>
+                        <div className={styles.buttonDelete}>
+                            <button className={`${styles.button} ${styles.buttonDelete}`} onClick={() => handleDeleteActivity(index)}>Excluir</button>
+                        </div>
                     </li>
                 ))}
             </ul>
