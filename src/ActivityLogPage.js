@@ -9,7 +9,7 @@ function ActivityLogPage() {
         calorias: '',
         quilometragem: ''
     });
-    const [errorMessage, setErrorMessage] = useState(''); // Novo estado para a mensagem de erro
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const storedActivities = localStorage.getItem('activities');
@@ -19,7 +19,6 @@ function ActivityLogPage() {
     }, []);
 
     const handleAddActivity = () => {
-        // Verifica se todos os campos foram preenchidos
         if (!newActivity.tipo || !newActivity.data || !newActivity.calorias || !newActivity.quilometragem) {
             setErrorMessage('Por favor, preencha todos os campos antes de adicionar uma atividade.');
             return;
@@ -28,8 +27,8 @@ function ActivityLogPage() {
         const updatedActivities = [...activities, newActivity];
         setActivities(updatedActivities);
         localStorage.setItem('activities', JSON.stringify(updatedActivities));
-        setNewActivity({ tipo: '', data: '', calorias: '', quilometragem: '' }); // Reset form
-        setErrorMessage(''); // Limpa a mensagem de erro
+        setNewActivity({ tipo: '', data: '', calorias: '', quilometragem: '' });
+        setErrorMessage('');
     };
 
     const handleDeleteActivity = (index) => {
@@ -37,6 +36,12 @@ function ActivityLogPage() {
         setActivities(updatedActivities);
         localStorage.setItem('activities', JSON.stringify(updatedActivities));
     };
+
+    // Função para formatar a data
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
 
     return (
         <div className={styles.container}>
@@ -77,7 +82,7 @@ function ActivityLogPage() {
                 {activities.map((activity, index) => (
                     <li key={index} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div className={styles.activityMessage}>
-                            <p>{activity.tipo} - {activity.data} - {activity.calorias} calorias - {activity.quilometragem} km</p>
+                            <p>{activity.tipo} - {formatDate(activity.data)} - {activity.calorias} calorias - {activity.quilometragem} km</p>
                         </div>
                         <div className={styles.buttonDelete}>
                             <button className={`${styles.button} ${styles.buttonDelete}`} onClick={() => handleDeleteActivity(index)}>Excluir</button>
