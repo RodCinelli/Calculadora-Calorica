@@ -451,7 +451,7 @@
       "sizes": "1024x1024"
     }
   ],
-  "start_url": ".https://calculadora-calorica.vercel.app/",
+  "start_url": "https://calculadora-calorica.vercel.app/",
   "display": "standalone",
   "theme_color": "#ff82ab",
   "background_color": "#ff82ab",
