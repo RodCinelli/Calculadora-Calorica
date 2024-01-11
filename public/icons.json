@@ -1,6 +1,4 @@
 {
-  "short_name": "Balança da KK",
-  "name": "Balança da KK",
   "icons": [
     {
       "src": "windows11/SmallTile.scale-100.png",
@@ -450,18 +448,5 @@
       "src": "ios/1024.png",
       "sizes": "1024x1024"
     }
-  ],
-  "start_url": ".https://calculadora-calorica.vercel.app/",
-  "display": "standalone",
-  "theme_color": "#ff82ab",
-  "background_color": "#ff82ab",
-  "id": "RodCinelli",
-  "description": "Um aplicativo desenvolvido para auxiliar a Camila a perder peso :D",
-  "lang": "pt",
-  "categories": [
-    "fitness",
-    "health",
-    "lifestyle",
-    "sports"
   ]
 }
