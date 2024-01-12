@@ -70,7 +70,7 @@ p {
     align-items: center;
     text-align: center;
     background-color: #f0f0f0;
-    padding: 10px 10px 25px 10px; /* Adicionado 20px de padding na parte inferior */
+    padding: 10px 10px 25px 10px; /* Adicionado 25px de padding na parte inferior */
     border-radius: 5px;
     margin-top: 55px;
     flex-direction: column;
@@ -93,7 +93,7 @@ p {
         align-items: center;
         text-align: center;
         background-color: #f0f0f0;
-        padding: 10px 10px 25px 10px; /* Adicionado 20px de padding na parte inferior */
+        padding: 10px 10px 25px 10px; /* Adicionado 25px de padding na parte inferior */
         border-radius: 5px;
         margin-top: 32px;
         flex-direction: column;

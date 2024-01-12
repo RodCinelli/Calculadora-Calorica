@@ -14,6 +14,7 @@ function App() {
   return (
     <div className={homeStyles.container}> {/* Adicionando a classe do container principal da HomePage */}
       <br />
+      <br />
       <div>
         <button className={activityLogStyles.button} onClick={() => navigateTo('home')}>Calculadora</button>
         <button className={activityLogStyles.button} onClick={() => navigateTo('activityLog')}>Registro de Atividades</button>
