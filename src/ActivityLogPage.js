@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './ActivityLogPage.module.css';
+import ReactDatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function ActivityLogPage() {
     const [activities, setActivities] = useState([]);
     const [newActivity, setNewActivity] = useState({
         tipo: '',
-        data: '',
+        data: new Date(),
         calorias: '',
         quilometragem: ''
     });
@@ -14,7 +16,11 @@ function ActivityLogPage() {
     useEffect(() => {
         const storedActivities = localStorage.getItem('activities');
         if (storedActivities) {
-            setActivities(JSON.parse(storedActivities));
+            const parsedActivities = JSON.parse(storedActivities).map(activity => ({
+                ...activity,
+                data: new Date(activity.data) // Converte a string ISO de volta para um objeto Date
+            }));
+            setActivities(parsedActivities);
         }
     }, []);
 
@@ -24,10 +30,10 @@ function ActivityLogPage() {
             return;
         }
 
-        const updatedActivities = [...activities, newActivity];
+        const updatedActivities = [...activities, { ...newActivity, data: newActivity.data.toISOString() }];
         setActivities(updatedActivities);
         localStorage.setItem('activities', JSON.stringify(updatedActivities));
-        setNewActivity({ tipo: '', data: '', calorias: '', quilometragem: '' });
+        setNewActivity({ tipo: '', data: new Date(), calorias: '', quilometragem: '' }); // Reset form com a nova data
         setErrorMessage('');
     };
 
@@ -37,11 +43,9 @@ function ActivityLogPage() {
         localStorage.setItem('activities', JSON.stringify(updatedActivities));
     };
 
-    // Função para formatar a data
-    function formatDate(dateString) {
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        return new Date(dateString).toLocaleDateString(undefined, options);
-    }
+    const handleDateChange = (date) => {
+        setNewActivity({ ...newActivity, data: date }); // armazena o objeto Date diretamente
+    };
 
     return (
         <div className={styles.container}>
@@ -55,12 +59,12 @@ function ActivityLogPage() {
                     onChange={e => setNewActivity({ ...newActivity, tipo: e.target.value })}
                     placeholder="Tipo de Atividade"
                 />
-                <input
+                <ReactDatePicker
+                    selected={newActivity.data}
+                    onChange={handleDateChange}
                     className={styles.input}
-                    type="date"
-                    value={newActivity.data}
-                    onChange={e => setNewActivity({ ...newActivity, data: e.target.value })}
-                    placeholder="Data"
+                    placeholderText="Data"
+                    dateFormat="dd/MM/yyyy" // Adiciona o formato da data
                 />
                 <input
                     className={styles.input}
@@ -82,7 +86,7 @@ function ActivityLogPage() {
                 {activities.map((activity, index) => (
                     <li key={index} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div className={styles.activityMessage}>
-                            <p>{activity.tipo} - {formatDate(activity.data)} - {activity.calorias} calorias - {activity.quilometragem} km</p>
+                            <p>{activity.tipo} - {new Date(activity.data).toLocaleDateString('pt-BR')} - {activity.calorias} calorias - {activity.quilometragem} km</p>
                         </div>
                         <div className={styles.buttonDelete}>
                             <button className={`${styles.button} ${styles.buttonDelete}`} onClick={() => handleDeleteActivity(index)}>Excluir</button>
