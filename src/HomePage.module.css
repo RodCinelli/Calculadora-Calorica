@@ -95,7 +95,7 @@ p {
         background-color: #f0f0f0;
         padding: 10px 10px 25px 10px; /* Adicionado 20px de padding na parte inferior */
         border-radius: 5px;
-        margin-top: 30px;
+        margin-top: 32px;
         flex-direction: column;
     }
 }
