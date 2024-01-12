@@ -72,7 +72,7 @@ p {
     background-color: #f0f0f0;
     padding: 10px 10px 25px 10px; /* Adicionado 20px de padding na parte inferior */
     border-radius: 5px;
-    margin-top: 35px;
+    margin-top: 30px;
     flex-direction: column;
 }
 
@@ -86,33 +86,3 @@ p {
     margin-bottom: 0;
 }
 
-/* Estilos para dispositivos com largura de tela menor que 600px */
-@media (max-width: 600px) {
-    .header {
-        margin-top: 25px;
-        margin-bottom: 25px;
-    }
-
-    .input {
-        margin-bottom: 15px;
-        width: 80%; 
-    }
-
-    .lastInput {
-        margin-bottom: 20px;
-    }
-
-    .button {
-        width: 80%;
-        margin-bottom: 5px;
-    }
-
-    .resultado {
-        padding: 5px 5px 15px 5px;
-        margin-top: 20px;
-    }
-
-    .resultado p {
-        font-size: 12px;
-    }
-}
