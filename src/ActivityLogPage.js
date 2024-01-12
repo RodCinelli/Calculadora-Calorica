@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './ActivityLogPage.module.css';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { pt } from 'date-fns/locale';
 
 function ActivityLogPage() {
     const [activities, setActivities] = useState([]);
@@ -59,13 +60,16 @@ function ActivityLogPage() {
                     onChange={e => setNewActivity({ ...newActivity, tipo: e.target.value })}
                     placeholder="Tipo de Atividade"
                 />
-                <ReactDatePicker
-                    selected={newActivity.data}
-                    onChange={handleDateChange}
-                    className={styles.input}
-                    placeholderText="Data"
-                    dateFormat="dd/MM/yyyy" // Adiciona o formato da data
-                />
+                <div className={styles.datePicker}>
+                    <ReactDatePicker
+                        selected={newActivity.data}
+                        onChange={handleDateChange}
+                        className={styles.input}
+                        placeholderText="Data"
+                        dateFormat="dd/MM/yyyy"
+                        locale={pt}
+                    />
+                </div>
                 <input
                     className={styles.input}
                     type="number"
@@ -77,7 +81,7 @@ function ActivityLogPage() {
                     type="number"
                     value={newActivity.quilometragem}
                     onChange={e => setNewActivity({ ...newActivity, quilometragem: e.target.value })}
-                    placeholder="Quilometragem Percorrida"
+                    placeholder="Quilômetros Percorridos"
                 />
                 <button className={`${styles.buttonAdd} ${styles.button}`} onClick={handleAddActivity}>Adicionar Atividade</button>
             </div>

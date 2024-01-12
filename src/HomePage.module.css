@@ -35,6 +35,13 @@ p {
     text-align: center;
 }
 
+.input:focus {
+    outline: none; /* Remove o contorno padrão que os navegadores aplicam ao focar */
+    border: 2px solid #ff82ab; /* Muda a cor da borda para uma variação mais clara do rosa */
+    box-shadow: 0 0 10px 2px #ff82ab; /* Adiciona um glow ao redor do campo */
+    transition: box-shadow 0.3s ease-in-out; /* Adiciona uma transição suave ao glow */
+}
+
 .lastInput {
     margin-bottom: 40px; /* Margem maior para o último input */
 }
