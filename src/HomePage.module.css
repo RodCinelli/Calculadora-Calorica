@@ -72,7 +72,7 @@ p {
     background-color: #f0f0f0;
     padding: 10px 10px 25px 10px; /* Adicionado 20px de padding na parte inferior */
     border-radius: 5px;
-    margin-top: 30px;
+    margin-top: 55px;
     flex-direction: column;
 }
 
@@ -86,3 +86,16 @@ p {
     margin-bottom: 0;
 }
 
+/* Estilos para dispositivos com largura de tela menor que 600px */
+@media (max-width: 600px) {
+    .resultado {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        background-color: #f0f0f0;
+        padding: 10px 10px 25px 10px; /* Adicionado 20px de padding na parte inferior */
+        border-radius: 5px;
+        margin-top: 30px;
+        flex-direction: column;
+    }
+}
