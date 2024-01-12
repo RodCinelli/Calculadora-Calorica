@@ -1,3 +1,13 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
+p {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
 .container {
     background-color: #ffe4e1;
     min-height: 100vh;
@@ -9,6 +19,7 @@
 }
 
 .header {
+    font-family: 'Playfair Display', serif;
     color: #ff69b4;
     margin-top: 50px;
     margin-bottom: 50px; /* Reduzir a margem inferior pode aproximar o cabeçalho dos campos de entrada */
@@ -54,12 +65,11 @@
     background-color: #f0f0f0;
     padding: 10px 10px 25px 10px; /* Adicionado 20px de padding na parte inferior */
     border-radius: 5px;
-    margin-top: 45px;
+    margin-top: 35px;
     flex-direction: column;
 }
 
 .resultado p {
-    font-weight: bold;
     font-size: 14px;
     color: #ff82ab;
     line-height: 1;

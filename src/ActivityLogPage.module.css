@@ -9,6 +9,7 @@
 }
 
 .header {
+    font-family: 'Playfair Display', serif;
     color: #ff69b4;
     margin-top: 50px;
     margin-bottom: 50px; /* Reduzir a margem inferior pode aproximar o cabeçalho dos campos de entrada */
@@ -77,8 +78,6 @@ li {
     margin-bottom: 10px; /* Espaçamento entre itens da lista */
 }
 
-
-
 .button {
     padding: 10px 20px;
     color: white;
@@ -123,5 +122,7 @@ li {
     text-align: center;
     margin-bottom: 60px;
 }
+
+
 
 
