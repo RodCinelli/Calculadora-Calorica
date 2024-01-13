@@ -3,6 +3,8 @@ import styles from './ActivityLogPage.module.css';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { pt } from 'date-fns/locale';
+import { db } from './firebase-config';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 function ActivityLogPage() {
     const [activities, setActivities] = useState([]);
@@ -15,43 +17,52 @@ function ActivityLogPage() {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        const storedActivities = localStorage.getItem('activities');
-        if (storedActivities) {
-            const parsedActivities = JSON.parse(storedActivities).map(activity => ({
-                ...activity,
-                data: new Date(activity.data) // Converte a string ISO de volta para um objeto Date
+        const fetchActivities = async () => {
+            const response = await getDocs(collection(db, 'activities'));
+            const activitiesData = response.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id,
+                data: new Date(doc.data().data.split('/').reverse().join('-')) // Converte de Dia/Mês/Ano para objeto Date
             }));
-            setActivities(parsedActivities);
-        }
+            setActivities(activitiesData);
+        };
+
+        fetchActivities();
     }, []);
 
-    const handleAddActivity = () => {
+    const handleAddActivity = async () => {
         if (!newActivity.tipo || !newActivity.data || !newActivity.calorias || !newActivity.quilometragem) {
             setErrorMessage('Por favor, preencha todos os campos antes de adicionar uma atividade.');
             return;
         }
 
-        const updatedActivities = [...activities, { ...newActivity, data: newActivity.data.toISOString() }];
-        setActivities(updatedActivities);
-        localStorage.setItem('activities', JSON.stringify(updatedActivities));
-        setNewActivity({ tipo: '', data: new Date(), calorias: '', quilometragem: '' }); // Reset form com a nova data
+        const formattedDate = newActivity.data.toLocaleDateString('pt-BR');
+        const newActivityData = {
+            ...newActivity,
+            data: formattedDate // Data no formato dia/mês/ano
+        };
+
+        const docRef = await addDoc(collection(db, 'activities'), newActivityData);
+        setActivities([...activities, { ...newActivityData, id: docRef.id }]); // Adiciona a nova atividade ao estado
+
         setErrorMessage('');
+        setNewActivity({ tipo: '', data: new Date(), calorias: '', quilometragem: '' }); // Reset form
     };
 
-    const handleDeleteActivity = (index) => {
-        const updatedActivities = activities.filter((_, i) => i !== index);
-        setActivities(updatedActivities);
-        localStorage.setItem('activities', JSON.stringify(updatedActivities));
+
+    const handleDeleteActivity = async (id) => {
+        await deleteDoc(doc(db, 'activities', id));
+        setActivities(activities.filter(activity => activity.id !== id));
     };
 
     const handleDateChange = (date) => {
-        setNewActivity({ ...newActivity, data: date }); // armazena o objeto Date diretamente
+        setNewActivity({ ...newActivity, data: date });
     };
 
     return (
         <div className={styles.container}>
             <h2 className={styles.header}>Registro de Atividades</h2>
-            {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>} {/* Exibe a mensagem de erro */}
+            {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <input
                     className={styles.input}
@@ -77,7 +88,8 @@ function ActivityLogPage() {
                     onChange={e => setNewActivity({ ...newActivity, calorias: e.target.value })}
                     placeholder="Calorias Gastas"
                 />
-                <input className={`${styles.input} ${styles.lastInput}`}
+                <input
+                    className={`${styles.input} ${styles.lastInput}`}
                     type="number"
                     value={newActivity.quilometragem}
                     onChange={e => setNewActivity({ ...newActivity, quilometragem: e.target.value })}
@@ -87,13 +99,13 @@ function ActivityLogPage() {
             </div>
 
             <ul>
-                {activities.map((activity, index) => (
-                    <li key={index} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                {activities.map((activity) => (
+                    <li key={activity.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div className={styles.activityMessage}>
                             <p>{activity.tipo} - {new Date(activity.data).toLocaleDateString('pt-BR')} - {activity.calorias} calorias - {activity.quilometragem} km</p>
                         </div>
                         <div className={styles.buttonDelete}>
-                            <button className={`${styles.button} ${styles.buttonDelete}`} onClick={() => handleDeleteActivity(index)}>Excluir</button>
+                            <button className={`${styles.button} ${styles.buttonDelete}`} onClick={() => handleDeleteActivity(activity.id)}>Excluir</button>
                         </div>
                     </li>
                 ))}
