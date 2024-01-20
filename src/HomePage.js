@@ -44,9 +44,9 @@ function HomePage() {
             <button className={styles.button} onClick={calcularPerdaDePeso}>Calcular</button>
             <button className={styles.button} onClick={limparFormulario}>Limpar</button>
             <div className={styles.resultado}>
-                <p>Baseado num déficit de 500 cal por dia</p>
-                <p>Calorias diárias para perder peso: {resultado.caloriasDiarias.toFixed(2)}</p>
-                <p>Quilometragem para perder peso: {resultado.quilometragemNecessaria.toFixed(2)}</p>
+                <p>Baseado num déficit de 500 kcal por dia</p>
+                <p>Calorias diárias para perder peso: {resultado.caloriasDiarias.toFixed(0)} kcal</p>
+                <p>Quilômetros diários para perder peso: {resultado.quilometragemNecessaria.toFixed(0)} km</p>
             </div>
         </div>
     );
