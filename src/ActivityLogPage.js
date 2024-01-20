@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { pt } from 'date-fns/locale';
 import { db } from './firebase-config';
 import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { getAnalytics, logEvent } from "firebase/analytics"; // Importando o Firebase Analytics
 
 function ActivityLogPage() {
     const [activities, setActivities] = useState([]);
@@ -15,6 +16,8 @@ function ActivityLogPage() {
         quilometragem: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
+
+    const analytics = getAnalytics(); // Inicializando o Firebase Analytics
 
     useEffect(() => {
         const fetchActivities = async () => {
@@ -45,14 +48,17 @@ function ActivityLogPage() {
         const docRef = await addDoc(collection(db, 'activities'), newActivityData);
         setActivities([...activities, { ...newActivityData, id: docRef.id }]); // Adiciona a nova atividade ao estado
 
+        logEvent(analytics, 'add_activity'); // Registra um evento de adição de atividade
+
         setErrorMessage('');
         setNewActivity({ tipo: '', data: new Date(), calorias: '', quilometragem: '' }); // Reset form
     };
 
-
     const handleDeleteActivity = async (id) => {
         await deleteDoc(doc(db, 'activities', id));
         setActivities(activities.filter(activity => activity.id !== id));
+
+        logEvent(analytics, 'delete_activity'); // Registra um evento de exclusão de atividade
     };
 
     const handleDateChange = (date) => {

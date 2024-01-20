@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
 import styles from './HomePage.module.css';
+import { analytics } from './firebase-config'; // Importando o Firebase Analytics
+import { logEvent } from "firebase/analytics";
 
 function HomePage() {
     const [peso, setPeso] = useState('');
     const [altura, setAltura] = useState('');
     const [idade, setIdade] = useState('');
     const [pesoDesejado, setPesoDesejado] = useState('');
-    const [dias, setDias] = useState(''); // Novo estado para o número de dias
+    const [dias, setDias] = useState('');
     const [resultado, setResultado] = useState({ caloriasDiarias: 0, quilometragemNecessaria: 0 });
 
     const calcularPerdaDePeso = () => {
         const fatorAtividade = 1.55; // Atividade moderada
         const alturaEmCm = altura * 100; // Convertendo altura em metros para centímetros
         const tmb = 447.593 + (9.247 * peso) + (3.098 * alturaEmCm) - (4.330 * idade);
-        const caloriasParaManterPeso = tmb * fatorAtividade;
-        const caloriasParaPerderPeso = caloriasParaManterPeso - 500; // Criando um déficit de 500 calorias
+        const caloriasParaPerderPeso = tmb * fatorAtividade - 500; // Criando um déficit de 500 calorias
         const deficitTotal = 7700 * (peso - pesoDesejado);
         const quilometragemNecessaria = deficitTotal / 60 / dias; // Dividindo pelo número de dias
-
-        setResultado({ caloriasDiarias: caloriasParaPerderPeso, quilometragemNecessaria });
-    }
+    
+        setResultado({ caloriasDiarias: caloriasParaPerderPeso, quilometragemNecessaria }); // Atualizando o estado resultado
+    
+        logEvent(analytics, 'calculate_weight_loss'); // Registra um evento no Firebase Analytics
+    };
 
     const limparFormulario = () => {
         setPeso('');
@@ -41,12 +44,14 @@ function HomePage() {
             <button className={styles.button} onClick={calcularPerdaDePeso}>Calcular</button>
             <button className={styles.button} onClick={limparFormulario}>Limpar</button>
             <div className={styles.resultado}>
-                <p>Baseado num déficit calórico diário de 500 kcal</p>
-                <p>Calorias diárias para perder peso: {Math.ceil(resultado.caloriasDiarias)} kcal</p>
-                <p>Kms necessários para perder peso: {Math.ceil(resultado.quilometragemNecessaria)} km/dia</p>
+                Calorias diárias para perder peso: {resultado.caloriasDiarias.toFixed(2)}
+                Quilometragem necessária por dia: {resultado.quilometragemNecessaria.toFixed(2)}
             </div>
         </div>
     );
 }
 
 export default HomePage;
+
+
+
