@@ -3,7 +3,7 @@ import HomePage from './HomePage';
 import ActivityLogPage from './ActivityLogPage';
 import homeStyles from './HomePage.module.css';
 import activityLogStyles from './ActivityLogPage.module.css';
-import { getAnalytics } from "firebase/analytics"; // Importando o Firebase Analytics
+import { getAnalytics, logEvent } from "firebase/analytics"; // Importando o Firebase Analytics e logEvent
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
