@@ -4,7 +4,7 @@ import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { pt } from 'date-fns/locale';
 import { db } from './firebase-config';
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { getAnalytics, logEvent } from "firebase/analytics"; // Importando o Firebase Analytics
 
 function ActivityLogPage() {
@@ -25,7 +25,7 @@ function ActivityLogPage() {
             const activitiesData = response.docs.map(doc => ({
                 ...doc.data(),
                 id: doc.id,
-                data: new Date(doc.data().data.split('/').reverse().join('-')) // Converte de Dia/Mês/Ano para objeto Date
+                data: doc.data().data.toDate() // Converte de Timestamp para objeto Date
             }));
             setActivities(activitiesData);
         };
@@ -39,14 +39,13 @@ function ActivityLogPage() {
             return;
         }
 
-        const formattedDate = newActivity.data.toLocaleDateString('pt-BR');
         const newActivityData = {
             ...newActivity,
-            data: formattedDate // Data no formato dia/mês/ano
+            data: Timestamp.fromDate(newActivity.data) // Data como objeto Timestamp
         };
 
         const docRef = await addDoc(collection(db, 'activities'), newActivityData);
-        setActivities([...activities, { ...newActivityData, id: docRef.id }]); // Adiciona a nova atividade ao estado
+        setActivities([...activities, { ...newActivityData, id: docRef.id, data: newActivity.data }]); // Adiciona a nova atividade ao estado
 
         logEvent(analytics, 'add_activity'); // Registra um evento de adição de atividade
 
@@ -108,7 +107,7 @@ function ActivityLogPage() {
                 {activities.map((activity) => (
                     <li key={activity.id} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <div className={styles.activityMessage}>
-                            <p>{activity.tipo} - {new Date(activity.data).toLocaleDateString('pt-BR')} - {activity.calorias} calorias - {activity.quilometragem} km</p>
+                            <p>{activity.tipo} - {activity.data.toLocaleDateString('pt-BR')} - {activity.calorias} calorias - {activity.quilometragem} km</p>
                         </div>
                         <div className={styles.buttonDelete}>
                             <button className={`${styles.button} ${styles.buttonDelete}`} onClick={() => handleDeleteActivity(activity.id)}>Excluir</button>

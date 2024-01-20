@@ -18,9 +18,9 @@ function HomePage() {
         const caloriasParaPerderPeso = tmb * fatorAtividade - 500; // Criando um déficit de 500 calorias
         const deficitTotal = 7700 * (peso - pesoDesejado);
         const quilometragemNecessaria = deficitTotal / 60 / dias; // Dividindo pelo número de dias
-    
+
         setResultado({ caloriasDiarias: caloriasParaPerderPeso, quilometragemNecessaria }); // Atualizando o estado resultado
-    
+
         logEvent(analytics, 'calculate_weight_loss'); // Registra um evento no Firebase Analytics
     };
 
@@ -44,8 +44,9 @@ function HomePage() {
             <button className={styles.button} onClick={calcularPerdaDePeso}>Calcular</button>
             <button className={styles.button} onClick={limparFormulario}>Limpar</button>
             <div className={styles.resultado}>
-                Calorias diárias para perder peso: {resultado.caloriasDiarias.toFixed(2)}
-                Quilometragem necessária por dia: {resultado.quilometragemNecessaria.toFixed(2)}
+                <p>Baseado num déficit de 500 cal por dia</p>
+                <p>Calorias diárias para perder peso: {resultado.caloriasDiarias.toFixed(2)}</p>
+                <p>Quilometragem para perder peso: {resultado.quilometragemNecessaria.toFixed(2)}</p>
             </div>
         </div>
     );
