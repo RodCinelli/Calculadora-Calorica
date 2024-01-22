@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styles from './HomePage.module.css';
-import { analytics } from './firebase-config'; // Importando o Firebase Analytics
+import styles from '../Home/HomePage.module.css';
+import { analytics } from '../../firebase-config'; // Importando o Firebase Analytics
 import { logEvent } from "firebase/analytics";
 
 function HomePage() {

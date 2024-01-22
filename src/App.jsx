@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import HomePage from './HomePage';
-import ActivityLogPage from './ActivityLogPage';
-import homeStyles from './HomePage.module.css';
-import activityLogStyles from './ActivityLogPage.module.css';
+import HomePage from './Pages/Home/HomePage';
+import ActivityLogPage from './Pages/ActivityLog/ActivityLogPage';
+import homeStyles from './Pages/Home/HomePage.module.css';
+import activityLogStyles from './Pages/ActivityLog/ActivityLogPage.module.css';
 import { getAnalytics, logEvent } from "firebase/analytics"; // Importando o Firebase Analytics e logEvent
 
 function App() {

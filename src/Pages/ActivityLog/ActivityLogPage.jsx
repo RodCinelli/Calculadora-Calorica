@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styles from './ActivityLogPage.module.css';
+import styles from '../ActivityLog/ActivityLogPage.module.css';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { pt } from 'date-fns/locale';
-import { db } from './firebase-config';
+import { db } from '../../firebase-config';
 import { collection, getDocs, addDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { getAnalytics, logEvent } from "firebase/analytics"; // Importando o Firebase Analytics
 
